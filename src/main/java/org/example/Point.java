@@ -25,15 +25,17 @@ public class Point {
         this.y = y;
     }
 
+    // distance() -> (0,0)'a göre
     public double distance() {
         return distance(0, 0);
     }
 
+    // distance(Point p)
     public double distance(Point p) {
-        if (p == null) return distance(0, 0);
         return distance(p.x, p.y);
     }
 
+    // distance(int a, int b)
     public double distance(int a, int b) {
         int dx = a - this.x;
         int dy = b - this.y;

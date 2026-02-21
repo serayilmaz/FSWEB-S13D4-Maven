@@ -1,14 +1,21 @@
 package org.example;
 
 public class Player {
-    private final String name;
+    private String name;
     private int healthPercentage;
-    private final Weapon weapon;
+    private Weapon weapon;
 
     public Player(String name, int healthPercentage, Weapon weapon) {
         this.name = name;
-        this.healthPercentage = clampHealth(healthPercentage);
         this.weapon = weapon;
+
+        if (healthPercentage > 100) {
+            this.healthPercentage = 100;
+        } else if (healthPercentage < 0) {
+            this.healthPercentage = 0;
+        } else {
+            this.healthPercentage = healthPercentage;
+        }
     }
 
     public int healthRemaining() {
@@ -16,27 +23,19 @@ public class Player {
     }
 
     public void loseHealth(int damage) {
-        if (damage < 0) damage = 0;
-        healthPercentage -= damage;
+        this.healthPercentage -= damage;
 
-        if (healthPercentage <= 0) {
-            healthPercentage = 0;
-            System.out.println(name + " player has been knocked out of game");
+        if (this.healthPercentage < 0) {
+            this.healthPercentage = 0;
+            System.out.println(this.name + " player has been knocked out of game");
         }
     }
 
     public void restoreHealth(int healthPotion) {
-        if (healthPotion < 0) healthPotion = 0;
-        healthPercentage += healthPotion;
+        this.healthPercentage += healthPotion;
 
-        if (healthPercentage > 100) {
-            healthPercentage = 100;
+        if (this.healthPercentage > 100) {
+            this.healthPercentage = 100;
         }
-    }
-
-    private int clampHealth(int value) {
-        if (value > 100) return 100;
-        if (value < 0) return 0;
-        return value;
     }
 }
